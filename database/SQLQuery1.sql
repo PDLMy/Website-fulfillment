@@ -65,3 +65,7 @@ CREATE TABLE Lines (
 	Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_created_at DEFAULT SYSDATETIME(),
 	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_updated_at DEFAULT SYSDATETIME(),
 )
+
+EXEC sp_rename 'Lines.ID', 'ID_Line', 'COLUMN';
+EXEC sp_rename 'dbo.DF_users_created_at', 'DF_line_created_at', 'OBJECT';
+EXEC sp_rename 'dbo.DF_users_updated_at', 'DF_line_updated_at', 'OBJECT';
