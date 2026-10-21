@@ -26,3 +26,14 @@ CREATE TABLE Wards (
 	Provinces_ID BINARY NOT NULL CONSTRAINT FK_Districts_Provinces
     FOREIGN KEY (Provinces_ID) REFERENCES Provinces(Provinces_ID),
 )
+
+CREATE TABLE User_addresses (
+	ID BINARY NOT NULL PRIMARY KEY,
+	User_ID BINARY NOT NULL CONSTRAINT FK_User_Address
+    FOREIGN KEY (User_ID) REFERENCES Users(User_ID),
+	Provinces_ID BINARY NOT NULL CONSTRAINT FK_Provinces_Address
+    FOREIGN KEY (Provinces_ID) REFERENCES Provinces(Provinces_ID),
+	Wards_ID BINARY NOT NULL CONSTRAINT FK_Wards_Address
+    FOREIGN KEY (Wards_ID) REFERENCES Wards(Wards_ID),
+	Detail_Address NVARCHAR(255) NOT NULL
+)
