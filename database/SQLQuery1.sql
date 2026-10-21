@@ -69,3 +69,12 @@ CREATE TABLE Lines (
 EXEC sp_rename 'Lines.ID', 'ID_Line', 'COLUMN';
 EXEC sp_rename 'dbo.DF_users_created_at', 'DF_line_created_at', 'OBJECT';
 EXEC sp_rename 'dbo.DF_users_updated_at', 'DF_line_updated_at', 'OBJECT';
+
+CREATE TABLE Floors (
+	ID_Floor BINARY NOT NULL PRIMARY KEY,
+	Floor_Number VARCHAR(2) NOT NULL,
+	ID_Line BINARY NOT NULL CONSTRAINT FK_Line_Floors
+    FOREIGN KEY (ID_Line) REFERENCES Lines(ID_Line),
+	Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_floor_created_at DEFAULT SYSDATETIME(),
+	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_floor_updated_at DEFAULT SYSDATETIME(),
+)
