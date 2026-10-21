@@ -11,12 +11,16 @@ CREATE TABLE Users (
 	Fullname NVARCHAR(20) NOT NULL,
 	Lastname NVARCHAR(20) NOT NULL,
 	Birthday DATE NOT NULL,
+	Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_created_at DEFAULT SYSDATETIME(),
+	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_updated_at DEFAULT SYSDATETIME(),
 )
 
 -- Thành Phố
 CREATE TABLE Provinces (
 	Provinces_ID BINARY NOT NULL PRIMARY KEY,
 	Name NVARCHAR(30) NOT NULL,
+	Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_created_at DEFAULT SYSDATETIME(),
+	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_updated_at DEFAULT SYSDATETIME(),
 )
 
 -- Phường
@@ -25,6 +29,8 @@ CREATE TABLE Wards (
 	Name NVARCHAR(30) NOT NULL,
 	Provinces_ID BINARY NOT NULL CONSTRAINT FK_Districts_Provinces
     FOREIGN KEY (Provinces_ID) REFERENCES Provinces(Provinces_ID),
+	Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_created_at DEFAULT SYSDATETIME(),
+	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_updated_at DEFAULT SYSDATETIME(),
 )
 
 CREATE TABLE User_addresses (
@@ -35,5 +41,8 @@ CREATE TABLE User_addresses (
     FOREIGN KEY (Provinces_ID) REFERENCES Provinces(Provinces_ID),
 	Wards_ID BINARY NOT NULL CONSTRAINT FK_Wards_Address
     FOREIGN KEY (Wards_ID) REFERENCES Wards(Wards_ID),
-	Detail_Address NVARCHAR(255) NOT NULL
+	Detail_Address NVARCHAR(255) NOT NULL,
+	Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_created_at DEFAULT SYSDATETIME(),
+	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_updated_at DEFAULT SYSDATETIME(),
 )
+
