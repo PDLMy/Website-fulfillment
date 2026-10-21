@@ -53,6 +53,10 @@ CREATE TABLE Areas (
 	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_updated_at DEFAULT SYSDATETIME(),
 )
 
+EXEC sp_rename 'Areas.ID', 'ID_Area', 'COLUMN';
+EXEC sp_rename 'dbo.DF_users_created_at', 'DF_areas_created_at', 'OBJECT';
+EXEC sp_rename 'dbo.DF_users_updated_at', 'DF_areas_updated_at', 'OBJECT';
+
 CREATE TABLE Lines (
 	ID BINARY NOT NULL PRIMARY KEY,
 	Line_Number VARCHAR(2) NOT NULL,
