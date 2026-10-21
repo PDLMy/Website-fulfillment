@@ -12,3 +12,9 @@ CREATE TABLE Users (
 	Lastname NVARCHAR(20) NOT NULL,
 	Birthday DATE NOT NULL,
 )
+
+-- Thành Phố
+CREATE TABLE Provinces (
+	Provinces_ID BINARY NOT NULL PRIMARY KEY,
+	Name NVARCHAR(30) NOT NULL,
+)
