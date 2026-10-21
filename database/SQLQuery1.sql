@@ -1,0 +1,14 @@
+CREATE DATABASE FulfilmentApp
+
+USE FulfilmentApp
+
+CREATE TABLE Users (
+	User_ID BINARY NOT NULL PRIMARY KEY,
+	Username VARCHAR(50) COLLATE Vietnamese_CI_AS NOT NULL UNIQUE,
+	Password VARCHAR(255) NOT NULL,
+	Avatar_Img VARCHAR(500) COLLATE Vietnamese_CI_AS NULL,
+	Coin DECIMAL(18, 2) NOT NULL DEFAULT 0 CONSTRAINT CK_User_Coin_Non_Negative CHECK (coin >= 0),
+	Fullname NVARCHAR(20) NOT NULL,
+	Lastname NVARCHAR(20) NOT NULL,
+	Birthday DATE NOT NULL,
+)
