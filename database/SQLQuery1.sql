@@ -18,3 +18,11 @@ CREATE TABLE Provinces (
 	Provinces_ID BINARY NOT NULL PRIMARY KEY,
 	Name NVARCHAR(30) NOT NULL,
 )
+
+-- Phường
+CREATE TABLE Wards (
+	Wards_ID BINARY NOT NULL PRIMARY KEY,
+	Name NVARCHAR(30) NOT NULL,
+	Provinces_ID BINARY NOT NULL CONSTRAINT FK_Districts_Provinces
+    FOREIGN KEY (Provinces_ID) REFERENCES Provinces(Provinces_ID),
+)
