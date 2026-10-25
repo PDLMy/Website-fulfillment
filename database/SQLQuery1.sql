@@ -114,7 +114,7 @@ CREATE TABLE Products (
 );
 
 CREATE TABLE Inventory (
-    ID_Inventory BIGINT NOT NULL PRIMARY KEY,
+    ID_Inventory BINARY NOT NULL PRIMARY KEY,
     ID_Location BINARY NOT NULL CONSTRAINT FK_Location_Inventorys
     FOREIGN KEY (ID_Location) REFERENCES Location(ID_Location),                -- FK đến bảng locations (A-01-05-3)
     ID_Product BINARY NOT NULL CONSTRAINT FK_Product_Inventorys
@@ -139,4 +139,52 @@ CREATE TABLE Inventory (
     INDEX idx_inventory_product (ID_Product),
     INDEX idx_inventory_lot (Lot_Number),
     INDEX idx_inventory_expiry (Expiry_Date)
+);
+
+CREATE TABLE Orders (
+    ID_Order BINARY NOT NULL PRIMARY KEY,
+    Order_Code VARCHAR(50) NOT NULL UNIQUE,     -- Mã đơn hàng hiển thị cho khách (VD: ORD-20261025-0001)
+    Customer_Name VARCHAR(150) NOT NULL,        -- Tên khách hàng
+    Customer_Phone VARCHAR(20) NOT NULL,        -- Số điện thoại khách hàng
+    Shipping_Address NVARCHAR(500) NOT NULL,    -- Địa chỉ giao hàng
+    
+    -- Trạng thái đơn hàng
+    OrderStatus VARCHAR(30) NOT NULL 
+        CONSTRAINT CK_Orders_Status CHECK (OrderStatus IN ('PENDING', 'CONFIRMED', 'PACKING', 'SHIPPING', 'COMPLETED', 'CANCELLED')) 
+        DEFAULT 'PENDING',
+        
+    -- Trạng thái thanh toán
+    PaymentStatus VARCHAR(30) NOT NULL 
+        CONSTRAINT CK_Orders_PaymentStatus CHECK (PaymentStatus IN ('UNPAID', 'PAID', 'REFUNDED')) 
+        DEFAULT 'UNPAID',
+        
+    Total_Amount DECIMAL(18, 2) NOT NULL DEFAULT 0, -- Tổng giá trị đơn hàng
+    
+    Note NVARCHAR(500) NULL,                    -- Ghi chú của khách hàng
+    
+    Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_orders_created_at DEFAULT SYSDATETIME(),
+    Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_orders_updated_at DEFAULT SYSDATETIME(),
+
+    -- Index tối ưu tìm kiếm theo mã đơn hoặc sdt khách
+    INDEX idx_orders_code (Order_Code),
+    INDEX idx_orders_phone (Customer_Phone),
+    INDEX idx_orders_status (OrderStatus)
+);
+
+CREATE TABLE Order_Details (
+    ID_OrderDetail BINARY NOT NULL PRIMARY KEY,
+    ID_Order BINARY NOT NULL,                   -- FK đến bảng Orders
+    ID_Product BINARY NOT NULL,                    -- FK đến bảng Products
+    
+    Quantity INT NOT NULL,                      -- Số lượng khách mua
+    Unit_Price DECIMAL(18, 2) NOT NULL,         -- Giá bán của 1 sản phẩm tại thời điểm đặt hàng
+    Sub_Total DECIMAL(18, 2) NOT NULL,          -- Thành tiền (= Quantity * Unit_Price)
+
+    -- Ràng buộc khóa ngoại
+    CONSTRAINT FK_Order_OrderDetails FOREIGN KEY (ID_Order) REFERENCES Orders(ID_Order) ON DELETE CASCADE,
+    CONSTRAINT FK_Product_OrderDetails FOREIGN KEY (ID_Product) REFERENCES Products(ID_Product),
+
+    -- Index tối ưu truy vấn
+    INDEX idx_orderdetails_order (ID_Order),
+    INDEX idx_orderdetails_product (ID_Product)
 );
