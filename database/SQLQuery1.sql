@@ -43,6 +43,15 @@ CREATE TABLE Permissions (
 	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_permission_updated_at DEFAULT SYSDATETIME(),
 )
 
+CREATE TABLE Role_Permissions (
+    Permission_ID BINARY NOT NULL,
+    Role_ID BINARY NOT NULL,
+    PRIMARY KEY (Permission_ID, Role_ID),
+    FOREIGN KEY (Permission_ID) REFERENCES Permissions(Permission_ID),
+    FOREIGN KEY (Role_ID) REFERENCES Roles(Role_ID),
+    Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_role_permissions_created_at DEFAULT SYSDATETIME(),
+	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_role_permissions_updated_at DEFAULT SYSDATETIME(),
+)
 
 -- Thành Phố
 CREATE TABLE Provinces (
