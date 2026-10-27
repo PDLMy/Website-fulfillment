@@ -15,6 +15,15 @@ CREATE TABLE Users (
 	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_updated_at DEFAULT SYSDATETIME(),
 )
 
+CREATE TABLE Roles (
+    Role_ID BINARY NOT NULL PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL UNIQUE,
+    Display_Name NVARCHAR(100),
+    Description TEXT,
+    Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_created_at DEFAULT SYSDATETIME(),
+	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_updated_at DEFAULT SYSDATETIME(),
+)
+
 -- Thành Phố
 CREATE TABLE Provinces (
 	Provinces_ID BINARY NOT NULL PRIMARY KEY,
@@ -188,3 +197,4 @@ CREATE TABLE Order_Details (
     INDEX idx_orderdetails_order (ID_Order),
     INDEX idx_orderdetails_product (ID_Product)
 );
+
