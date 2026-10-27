@@ -20,8 +20,8 @@ CREATE TABLE Roles (
     Name VARCHAR(50) NOT NULL UNIQUE,
     Display_Name NVARCHAR(100),
     Description TEXT,
-    Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_created_at DEFAULT SYSDATETIME(),
-	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_updated_at DEFAULT SYSDATETIME(),
+    Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_role_created_at DEFAULT SYSDATETIME(),
+	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_role_updated_at DEFAULT SYSDATETIME(),
 )
 
 CREATE TABLE User_Roles (
@@ -30,8 +30,8 @@ CREATE TABLE User_Roles (
     PRIMARY KEY (User_ID, Role_ID),
     FOREIGN KEY (User_ID) REFERENCES Users(User_ID),
     FOREIGN KEY (Role_ID) REFERENCES Roles(Role_ID),
-    Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_created_at DEFAULT SYSDATETIME(),
-	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_updated_at DEFAULT SYSDATETIME(),
+    Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_user_roles_created_at DEFAULT SYSDATETIME(),
+	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_user_roles_updated_at DEFAULT SYSDATETIME(),
 )
 
 CREATE TABLE Permissions (
@@ -39,8 +39,8 @@ CREATE TABLE Permissions (
     Name VARCHAR(50) NOT NULL UNIQUE,
     Display_Name NVARCHAR(100),
     Module VARCHAR(50),
-    Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_created_at DEFAULT SYSDATETIME(),
-	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_users_updated_at DEFAULT SYSDATETIME(),
+    Created_at DATETIME2(0) NOT NULL CONSTRAINT DF_permission_created_at DEFAULT SYSDATETIME(),
+	Updated_at DATETIME2(0) NOT NULL CONSTRAINT DF_permission_updated_at DEFAULT SYSDATETIME(),
 )
 
 
